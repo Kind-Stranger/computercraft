@@ -23,8 +23,10 @@ local function pastebin_get(pb, path)
 end
 
 if arg[0] == "pastebin" then
+  -- CraftOS --
   bot = arg[3]
 else
+  -- Something else? --
   bot = arg[1]
 end
 if bot == "farmbot" then
