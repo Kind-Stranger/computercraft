@@ -82,9 +82,23 @@ local function farm()
   end
 end
 
+local function help()
+  print("Only works in rectangle enclosures.")
+  print("Place turtle in layer directly above crops.")
+  print("Turtle requires border fence around whole farm at its level (any solid block above crop level)")
+  print("Will not plant new crops.")
+  print("Will only replant existing crops.")
+end
+
 local function main()
+  if arg[1] and string.lower(arg[1]) == 'help' then
+    help()
+    return
+  end
   local nextBlockName
   local moveHist = {"R"}
+  print("Farming crop: \""..cropArg.."\"")
+  print("..moving using \""..moveArg.."\"")
   while turtle.getFuelLevel() > 0 do
     nextBlockName = farm()
     move, moveHist = moveU.next(moveHist)
@@ -96,6 +110,4 @@ local function main()
   print("*** out of fuel ***")
 end
 
-print("Farming crop: \""..cropArg.."\"")
-print("..moving using \""..moveArg.."\"")
 main()
