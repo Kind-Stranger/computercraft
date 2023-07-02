@@ -6,3 +6,7 @@ Use the following commands in CraftOS to download scripts
 ```
 pastebin run P19aS1BE farmbot
 ```
+Then run using
+```
+farm
+```
