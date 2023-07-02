@@ -11,7 +11,6 @@ where: crop - restrict to specific crop type
          defaults to snake if omitted
 ]]--
 
-seedSlot = 1
 cropArg = arg[1]
 if not cropArg or #cropArg == 0 then
   cropArg = "any"
@@ -39,23 +38,27 @@ if not stat then
 end
 moveArg = arg[2]
 
-local function harvest()
-  print("..harvesting")
+local function harvest(block)
+  local crop = itemU.getSimpleName(block)
+  print("..harvesting"..crop)
   turtle.digDown()
 end
 
-local function sowSeed()
+local function sowSeed(block)
+  local seedSlot, msg = cropU.setSeedSlot(block)
+  if not seedSlot then
+    print("..not replanting: "..msg)
+    return
+  end
+  print("..sowing "..msg)
   turtle.select(seedSlot)
-  local seedData = turtle.getItemDetail()
-  local seedName = itemU.getSimpleName(seedData)
-  print("..sowing "..seedName)
-  turtle.placeDown()  
+  turtle.placeDown()
 end
 
 local function harvestIfMature(block)
   if cropU.isMature(block) then
-    harvest()
-    sowSeed()
+    harvest(block)
+    sowSeed(block)
   else
     print("..ignoring")
   end
