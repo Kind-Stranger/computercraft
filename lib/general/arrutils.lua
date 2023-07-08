@@ -1,4 +1,5 @@
 -- /lib/general/arrutils.lua --
+
 local function slice(arr, s, e)
   --[[ Return sub-array from index
        `s` to `e` inclusive

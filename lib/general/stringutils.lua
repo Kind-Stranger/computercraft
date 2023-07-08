@@ -1,4 +1,5 @@
 -- /lib/general/stringutils.lua --
+
 local function getSubAfterChar(s, chr)
   --[[ example:
     getSubAfterChar("minecraft:sand", ":")
