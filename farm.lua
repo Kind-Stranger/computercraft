@@ -1,7 +1,4 @@
 -- /farm.lua --
-local moveU
-local cropU = require("lib.farm.croputils")
-local itemU = require("lib.general.itemutils")
 
 --[[ usage: farm [crop] [move_pattern]
 
@@ -11,33 +8,17 @@ where: crop - restrict to specific crop type
          defaults to snake if omitted
 ]]--
 
-cropArg = arg[1]
-if not cropArg or #cropArg == 0 then
-  cropArg = "any"
-end
+local cropArg = arg[1]
+if not cropArg then cropArg = "any" end
+local moveArg = arg[2]
+if not moveArg then moveArg = "snake" end
 
-local function setMoveU(module)
-  local s, e
-  if not module or #module == 0 then
-    arg = "snake"
-  end
-  if not string.match(module, "^[a-z]+$") then
-    error("Invalid move arg", 1)
-  end
-  moveU = require("lib.move."..module)
-end
-
-local moveArg
-if not arg[2] or not #arg[2] then
-  arg[2] = "snake"
-end
-stat, err = pcall(setMoveU, arg[2])
-if not stat then
-  print(err)
-  error("Invalid move arg", 1)
-end
-moveArg = arg[2]
-
+local cropU = require("lib.farm.croputils")
+local itemU = require("lib.general.itemutils")
+local moveU = assert(
+  require("lib.move."..moveArg),
+  error("Invalid move arg", 1))
+               
 local function harvest(block)
   local crop = itemU.getSimpleName(block)
   print("..harvesting"..crop)
@@ -72,7 +53,6 @@ local function farm()
   end
   local blockName = itemU.getSimpleName(block)
   print("Found:", blockName)
-  -- print(textutils.serialise(block)) --
 
   if cropArg == "any" or
      cropArg == blockName then
@@ -95,16 +75,18 @@ local function main()
     help()
     return
   end
-  local nextBlockName
-  local moveHist = {"R"}
   print("Farming crop: \""..cropArg.."\"")
   print("..moving using \""..moveArg.."\"")
+  -- Initialise move history --
+  local move
+  local moveHist = {"R"}
   while turtle.getFuelLevel() > 0 do
-    nextBlockName = farm()
-    move, moveHist = moveU.next(moveHist)
-    sleep(1)
+    farm()
+    move, moveHist = assert(moveU.next(moveHist))
     if move == "X" then
       sleep(300)
+    else
+      sleep(1)
     end
   end
   print("*** out of fuel ***")
