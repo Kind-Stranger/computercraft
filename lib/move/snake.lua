@@ -43,18 +43,18 @@ end
 
 local function next(hist)
   --[[ Moves or rotates to next block
-      -> lastest_move, updated_history
+      -> updated_history
   ]]--
   local move, hist = calcNext(hist)
   print("..snake: calcNext gave:"..move)
   if move == "X" then
-    -- Complete the 180 turn --
+    -- Complete the 180 spin --
     if hist[#hist] == "R" then
       turtle.turnRight()
     else
       turtle.turnLeft()
     end
-    -- Set history to trigger next u-turn --
+    -- Truncate history & trigger first U-turn --
     hist = {hist[1]}
   else
     if move == "R" then
@@ -64,7 +64,7 @@ local function next(hist)
     else
       moved, err=turtle.forward()
       if not moved then
-        print(err)
+        error(err)
       end
     end
     table.insert(hist, move)
