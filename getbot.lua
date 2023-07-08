@@ -14,12 +14,11 @@ local function pastebin_get(pb, path)
        doesn't already exist   ]]--
   local d, err
   local downloaded = false
-  if not file_exists(path) then
-    d=shell.execute("pastebin","get",pb,path)
-    if not d then
-      error("Failed to download "..pb.." to "..path)
-    end
+  if file_exists(path) then
+    assert(shell.execute("rm", path)
   end
+  assert(shell.execute("pastebin","get",pb,path),
+         "Failed to download "..pb.." to "..path)
 end
 
 if arg[0] == "pastebin" then
