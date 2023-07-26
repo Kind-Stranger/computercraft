@@ -17,11 +17,11 @@ local cropU = require("lib.farm.croputils")
 local itemU = require("lib.general.itemutils")
 local moveU = assert(
   require("lib.move."..moveArg),
-  error("Invalid move arg", 1))
+  "Invalid move arg")
                
 local function harvest(block)
   local crop = itemU.getSimpleName(block)
-  print("..harvesting"..crop)
+  print("..harvesting: "..crop)
   turtle.digDown()
 end
 
