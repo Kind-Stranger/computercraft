@@ -6,7 +6,7 @@ local function scanFor(name, meta)
         (optional) meta matches against "damage" attr.
     -> first slot containing `name` ]]--
   for i=1, 16 do
-    item = turtle.getItemDetails(i)
+    item = turtle.getItemDetail(i)
     if name == itemU.getSimpleName(item) then
       if not meta then
         return i
