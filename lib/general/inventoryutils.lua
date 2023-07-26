@@ -1,13 +1,22 @@
 -- /lib/general/inventoryutils.lua --
 local itemU = require("lib.general.itemutils")
 
-local function scanFor(name)
+local function scanFor(name, meta)
   --[[ Search inventory for `name` (simple name)
+        (optional) meta matches against "damage" attr.
     -> first slot containing `name` ]]--
   for i=1, 16 do
     item = turtle.getItemDetails(i)
     if name == itemU.getSimpleName(item) then
-      return i
+      if not meta then
+        return i
+      elseif meta == item.damage then
+        return i
+      end
     end
   end
 end
+
+return {
+  scanFor = scanFor,
+}
