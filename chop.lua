@@ -23,7 +23,10 @@ local function plant()
 end
 
 local function isInFront(name)
-  return name == itemU.getSimpleName(turtle.inspect())
+  hasBlock, block = turtle.inspect()
+  if hasBlock then
+    return name == itemU.getSimpleName(block)
+  end
 end
 
 local function fertilise()
