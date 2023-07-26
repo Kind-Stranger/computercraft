@@ -12,8 +12,6 @@ end
 local function pastebin_get(pb, path)
   --[[ Download the file if it
        doesn't already exist   ]]--
-  local d, err
-  local downloaded = false
   if file_exists(path) then
     assert(shell.execute("rm", path))
   end
@@ -37,6 +35,11 @@ if bot == "farmbot" then
   pastebin_get("8MmVaKqu", "/lib/general/stringutils.lua")
   pastebin_get("YV5tubHD", "/lib/move/snake.lua")
   print("Download successful!")
+elseif bot == "lumberjack" then
+  pastebin_get("wqJvr2v9", "/chop.lua")
+  pastebin_get("PS9yA7Zf", "/lib/general/inventoryutils.lua")
+  pastebin_get("y5qsBzdf", "/lib/general/itemutils.lua")
+  pastebin_get("8MmVaKqu", "/lib/general/stringutils.lua")
 else
   print("Unrecognised bot: "..bot)
 end
