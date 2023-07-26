@@ -7,7 +7,7 @@ local function scanFor(name, meta)
     -> first slot containing `name` ]]--
   for i=1, 16 do
     item = turtle.getItemDetail(i)
-    if name == itemU.getSimpleName(item) then
+    if item and name == itemU.getSimpleName(item) then
       if not meta then
         return i
       elseif meta == item.damage then
