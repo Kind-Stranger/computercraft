@@ -5,7 +5,7 @@ local function getSimpleName(item)
   --[[ Get basic item name from block or item data
     {.., "name":"minecraft:fence"} -> "fence"
   ]]--
-  return getSubAfterChar(item.name, ":")
+  return stringU.getSubAfterChar(item.name, ":")
 end
 
 return{
