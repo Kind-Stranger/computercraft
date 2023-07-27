@@ -1,22 +1,32 @@
 local itemU = require("lib.general.itemutils")
 local invU = require("lib.general.inventoryutils")
 
-local function spiralSuck(dia)
-  local dia = dia or 1
-  local currDia
-  for currDia=1, dia do
-    for side=1, 4 do
-      for _=1, currDia do
-        turtle.suck()
-        turtle.forward()
-      end
-      turtle.turnLeft()
-    end
-  end
+local function f()
+  assert(turtle.forward())
+  turtle.suck()
+end
+
+local function l()
+  assert(turtle.turnLeft())
+  turtle.suck()
+end
+
+local function r()
+  assert(turtle.turnRight())
+  turtle.suck()
+end
+
+local function spiralSuck()
+  turtle.suck() f() f() l()
+  f() r() r() r()
+  f() r() l() f() r() r() r()
+  f() r() l() f() r() r() r()
+  f() r() l() f() r() r() r()
+  f() l() f() f() l() l()
 end
 
 local function spinSuck()
-  for i=1, 4 do
+  for _=1, 4 do
     turtle.suck()
     turtle.turnLeft()
   end
@@ -77,19 +87,24 @@ local function chop()
   ]]
   while turtle.dig() do
     turtle.digUp()
-    turtle.up()
+    assert(turtle.up())
   end
 end
 
 local function main()
   while turtle.down() do end
   spinSuck()
+  local i = 0
   while turtle.getFuelLevel() > 0 do
     plant()
     fertilise()
     chop()
     while turtle.down() do end
-    spiralSuck()
+    if i == 10 then
+      spiralSuck()
+      i = 0
+    end
+    i = i+1
   end
   print("*** out of fuel ***")
 end
