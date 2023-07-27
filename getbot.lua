@@ -40,6 +40,7 @@ elseif bot == "lumberjack" then
   pastebin_get("PS9yA7Zf", "/lib/general/inventoryutils.lua")
   pastebin_get("y5qsBzdf", "/lib/general/itemutils.lua")
   pastebin_get("8MmVaKqu", "/lib/general/stringutils.lua")
+  print("Download successful!")
 else
   print("Unrecognised bot: "..bot)
 end
