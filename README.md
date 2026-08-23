@@ -1,10 +1,10 @@
 # computercraft
-Use the following commands in CraftOS to download scripts
+Use the following commands in CraftOS to download scripts from GitHub.
 
 ## TURTLES
 ### farm
 ```
-pastebin run P19aS1BE farmbot
+wget run https://raw.githubusercontent.com/Kind-Stranger/computercraft/master/getbot.lua farmbot
 ```
 Then see:
 ```
