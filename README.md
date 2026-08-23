@@ -5,21 +5,21 @@ Uses a single script for all downloads and updates.  Bots are then run directly.
 ## TURTLES
 Install the updater once:
 ```shell
-wget https://raw.githubusercontent.com/Kind-Stranger/computercraft/master/uprun.lua getbot.lua
+wget https://raw.githubusercontent.com/Kind-Stranger/computercraft/master/getbot.lua getbot.lua
 ```
 
 Use `getbot` to update it and a bot's libraries:
 ```shell
-getbot BOTNAME
+getbot <bot>
 ```
-...where BOTNAME is the name of the required turtle script (see Available Turtles section below) e.g.
+e.g.
 ```shell
 getbot farm
 ```
 
-See the help for an individual bot:
+After running `getbot`, see the help for an individual bot:
 ```shell
-BOTNAME help
+<bot> help
 ```
 
 
