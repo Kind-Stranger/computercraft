@@ -1,9 +1,29 @@
 local githubBase = "https://raw.githubusercontent.com/Kind-Stranger/computercraft/master/"
+local githubContents = "https://api.github.com/repos/Kind-Stranger/computercraft/contents/"
+local currentScript = "getbot.lua"
+
+local function list()
+  local response, err = http.get(githubContents)
+  assert(response, "Failed to list bots: "..(err or "unknown error"))
+  local code = response.getResponseCode()
+  local contents = response.readAll()
+  response.close()
+  assert(code == 200, "Failed to list bots (HTTP "..code..")")
+
+  local files = textutils.unserializeJSON(contents)
+  assert(files, "Failed to parse bot list")
+  for _, file in ipairs(files) do
+    if file.type == "file" and file.name:match("%.lua$") and file.name ~= currentScript then
+      local botName = file.name:gsub("%.lua$", "")
+      print(botName)
+    end
+  end
+end
 
 local function help()
-  print("Usage: uprun <bot> [arguments]")
-  print("Bots: farm, chop, mine")
-  print("Use 'uprun <bot> help' for bot-specific help.")
+  print("Usage: getbot <bot> [arguments]")
+  print("Use 'getbot list' to list available bots.")
+  print("Use 'getbot <bot> help' for bot-specific help.")
 end
 
 local function download(path)
@@ -31,6 +51,11 @@ function require(moduleName)
 end
 
 local bot = arg[1]
+if bot == "list" then
+  list()
+  return
+end
+
 if bot == nil or bot == "help" then
   help()
   return
