@@ -1,15 +1,19 @@
 local githubBase = "https://raw.githubusercontent.com/Kind-Stranger/computercraft/master/"
 
-local function github_get(path)
-  local url = githubBase..path
-  local destination = "/"..path
-  local response, err = http.get(url)
-  assert(response, "Failed to download "..url..": "..(err or "unknown error"))
+local function help()
+  print("Usage: uprun <bot> [arguments]")
+  print("Bots: farm, chop, mine")
+  print("Use 'uprun <bot> help' for bot-specific help.")
+end
 
+local function download(path)
+  local destination = "/"..path
+  local response, err = http.get(githubBase..path)
+  assert(response, "Failed to download "..path..": "..(err or "unknown error"))
   local code = response.getResponseCode()
   local contents = response.readAll()
   response.close()
-  assert(code == 200, "Failed to download "..url.." (HTTP "..code..")")
+  assert(code == 200, "Failed to download "..path.." (HTTP "..code..")")
 
   local directory = fs.getDir(destination)
   if directory ~= "" then
@@ -20,22 +24,17 @@ local function github_get(path)
   file.close()
 end
 
-local bot = arg[1]
-if bot == "farmbot" then
-  github_get("farm.lua")
-  github_get("lib/farm/croputils.lua")
-  github_get("lib/general/arrutils.lua")
-  github_get("lib/general/inventoryutils.lua")
-  github_get("lib/general/itemutils.lua")
-  github_get("lib/general/stringutils.lua")
-  github_get("lib/move/snake.lua")
-  print("Download successful!")
-elseif bot == "lumberjack" then
-  github_get("chop.lua")
-  github_get("lib/general/inventoryutils.lua")
-  github_get("lib/general/itemutils.lua")
-  github_get("lib/general/stringutils.lua")
-  print("Download successful!")
-else
-  print("Unrecognised bot: "..bot)
+local oldRequire = require
+function require(moduleName)
+  download(moduleName:gsub("%.", "/")..".lua")
+  return oldRequire(moduleName)
 end
+
+local bot = arg[1]
+if bot == nil or bot == "help" then
+  help()
+  return
+end
+
+table.remove(arg, 1)
+require(bot)

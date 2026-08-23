@@ -1,12 +1,28 @@
 # computercraft
-Use the following commands in CraftOS to download scripts from GitHub.
+A library of computercraft scripts.  Currently holds only turtles.
+Uses a single script for all downloads and updates.  Bots are then run directly.
 
 ## TURTLES
-### farm
+Install the updater once:
+```shell
+wget https://raw.githubusercontent.com/Kind-Stranger/computercraft/master/uprun.lua getbot.lua
 ```
-wget run https://raw.githubusercontent.com/Kind-Stranger/computercraft/master/getbot.lua farmbot
+
+Use `getbot` to update it and a bot's libraries:
+```shell
+getbot BOTNAME
 ```
-Then see:
+...where BOTNAME is the name of the required turtle script (see Available Turtles section below) e.g.
+```shell
+getbot farm
 ```
-farm help
+
+See the help for an individual bot:
+```shell
+BOTNAME help
 ```
+
+
+### Available Turtles
+- chop
+- farm
