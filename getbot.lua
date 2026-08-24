@@ -28,6 +28,7 @@ end
 
 local function download(path)
   local destination = "/"..path
+  print("Downloading "..path)
   local response, err = http.get(githubBase..path)
   assert(response, "Failed to download "..path..": "..(err or "unknown error"))
   local code = response.getResponseCode()
@@ -61,5 +62,5 @@ if bot == nil or bot == "help" then
   return
 end
 
-table.remove(arg, 1)
+table.remove(arg, 1) -- Remove "getbot" from the arguments
 require(bot)
