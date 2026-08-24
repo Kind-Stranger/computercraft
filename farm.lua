@@ -92,4 +92,6 @@ local function main()
   print("*** out of fuel ***")
 end
 
-main()
+if ... ~= "farm" then
+  main()
+end

@@ -1,3 +1,13 @@
+local function help()
+  print("Usage: chop")
+  print("Chops trees, replants saplings, and collects drops.")
+end
+
+if arg[1] and string.lower(arg[1]) == "help" then
+  help()
+  return
+end
+
 local itemU = require("lib.general.itemutils")
 local invU = require("lib.general.inventoryutils")
 
@@ -109,4 +119,6 @@ local function main()
   print("*** out of fuel ***")
 end
 
-main()
+if ... ~= "chop" then
+  main()
+end
